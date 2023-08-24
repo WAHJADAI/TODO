@@ -19,6 +19,10 @@ function App() {
     setTodos([...todos,newTask])}
     else alert("please write the Message.")
   }
+  function handleDeleteTask (id:number){
+    const deleteTask =todos.filter((todo)=>{return todo.id !==id})
+    setTodos(deleteTask)
+  }
   return (
     <div>
       <div>
@@ -29,7 +33,7 @@ function App() {
       <ul>
         {todos.map((todo)=>(
           
-          <li key={todo.id}><input type="checkbox" key={todo.id} />{todo.text}<button>delete</button></li>
+          <li key={todo.id}><input type="checkbox" key={todo.id} />{todo.text}<button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
         ))}
       </ul>
       </div>
