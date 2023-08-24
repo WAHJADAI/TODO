@@ -12,6 +12,7 @@ function App() {
   const [task,setTask]=useState<string>("")
   useEffect(()=>{
     localStorage.setItem("todos",JSON.stringify(todos))
+    console.log("👍")
   },[todos])
 
   function handleAddTask (){
@@ -41,7 +42,7 @@ function App() {
       <ul>
         {todos.map((todo)=>(
           
-          <li key={todo.id}><input type="checkbox" onClick={()=>handleToggle(todo.id)} />{todo.text}<button >Edit</button><button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
+          <li key={todo.id}><input type="checkbox" onClick={()=>handleToggle(todo.id)} defaultChecked={todo.complete}/>{todo.text}<button >Edit</button><button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
         ))}
       </ul>
       </div>
