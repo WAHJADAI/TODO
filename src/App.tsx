@@ -1,6 +1,7 @@
 import { item } from './todo'
 import './App.css'
 import { useEffect, useState } from 'react'
+import { Popup } from './Popup';
 
 function App() {
   const [todos,setTodos]=useState<item[]>(()=>{
@@ -10,6 +11,8 @@ function App() {
     }else return [];
   });
   const [task,setTask]=useState<string>("")
+  const [isEditing,setIsEditing]=useState<boolean>(false)
+  const [currentTask,setCurrentTask]=useState<item>()
   useEffect(()=>{
     localStorage.setItem("todos",JSON.stringify(todos))
     console.log("👍")
@@ -32,6 +35,9 @@ function App() {
       return todo
     }))
   }
+  function handleEditTask(){
+
+  }
   return (
     <div>
       <div>
@@ -42,9 +48,11 @@ function App() {
       <ul>
         {todos.map((todo)=>(
           
-          <li key={todo.id}><input type="checkbox" onClick={()=>handleToggle(todo.id)} defaultChecked={todo.complete}/>{todo.text}<button >Edit</button><button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
+          <li key={todo.id}><input type="checkbox" onClick={()=>handleToggle(todo.id)} defaultChecked={todo.complete}/>{todo.text}<button onClick={handleEditTask}>Edit</button><button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
         ))}
+        
       </ul>
+      {}
       </div>
     
 
