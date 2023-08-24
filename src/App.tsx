@@ -1,10 +1,19 @@
 import { item } from './todo'
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
-  const [todos,setTodos]=useState<item[]>([]);
+  const [todos,setTodos]=useState<item[]>(()=>{
+    const loadTodos =localStorage.getItem("todos");
+    if (loadTodos){
+      return JSON.parse(loadTodos)
+    }else return [];
+  });
   const [task,setTask]=useState<string>("")
+  useEffect(()=>{
+    localStorage.setItem("todos",JSON.stringify(todos))
+  },[todos])
+
   function handleAddTask (){
     if(task !==""){const newTask:item ={id:Date.now(),text:task,complete:false}
     setTodos([...todos,newTask])}
