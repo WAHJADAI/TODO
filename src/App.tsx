@@ -23,6 +23,14 @@ function App() {
     const deleteTask =todos.filter((todo)=>{return todo.id !==id})
     setTodos(deleteTask)
   }
+  function handleToggle (id:number){
+    setTodos(todos.map((todo)=>{
+      if(todo.id === id){
+        return {...todo,complete: !todo.complete}
+      }
+      return todo
+    }))
+  }
   return (
     <div>
       <div>
@@ -33,7 +41,7 @@ function App() {
       <ul>
         {todos.map((todo)=>(
           
-          <li key={todo.id}><input type="checkbox" key={todo.id} />{todo.text}<button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
+          <li key={todo.id}><input type="checkbox" onClick={()=>handleToggle(todo.id)} />{todo.text}<button >Edit</button><button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
         ))}
       </ul>
       </div>
