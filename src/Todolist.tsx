@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { item } from './todo';
  
 export function Todolist(){
@@ -9,6 +9,7 @@ export function Todolist(){
         }else return [];
       });
       const [task,setTask]=useState<string>("")
+      const [taskUpdate,setTaskUpdate]=useState<string>("")
       const [isEditing,setIsEditing]=useState<boolean>(false)
       const [currentTask,setCurrentTask]=useState<item>()
       useEffect(()=>{
@@ -33,12 +34,23 @@ export function Todolist(){
           return todo
         }))
       }
-      function handleOpenEditTask(){
+      function handleOpenEditTask(Task:item){
+        if(!isEditing){setCurrentTask({...Task})}
         setIsEditing(!isEditing)
+        console.log(currentTask)
       }
-      function handleEditTask(id:number){
-
+      function handleCloseEditTask(){
+        setIsEditing(false)
       }
+      function handleUpdateTask(){
+        setTodos(todos.map((todo)=>{
+            if(todo.id === currentTask?.id){
+              return {...todo,text: taskUpdate}
+            }
+            return todo
+          }))
+      }
+      
     return(
         <div>
             <div>
@@ -50,15 +62,20 @@ export function Todolist(){
       <ul>
         {todos.map((todo)=>(
           
-          <li key={todo.id}><input type="checkbox" onClick={()=>handleToggle(todo.id)} defaultChecked={todo.complete}/>{todo.text}<button onClick={handleOpenEditTask}>Edit</button><button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
+          <li key={todo.id}><input type="checkbox" onClick={()=>handleToggle(todo.id)} defaultChecked={todo.complete}/>{todo.text}<button onClick={()=>handleOpenEditTask(todo)}>Edit</button><button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
         ))}
         
       </ul>
       <div>
         {isEditing &&(
             
-            <div><input type="text" name="EditTask" />
-            <button>agree</button><button onClick={handleOpenEditTask}>close</button>
+            <div>
+                <form onSubmit={handleUpdateTask}>
+                <div>Edit task</div>
+                <input type="text" name="EditTask"  onChange={(e)=>setTaskUpdate(e.currentTarget.value)} required/>
+            <button type='submit'>agree</button><button onClick={handleCloseEditTask}>close</button>
+                </form>
+                
             </div>
         )}
       </div>
