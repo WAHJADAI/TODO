@@ -1,6 +1,6 @@
-import { item } from './todo'
+
 import './App.css'
-import {  useEffect, useState } from 'react'
+
 import { Todolist } from './Todolist'
 
 function App() {

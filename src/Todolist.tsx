@@ -1,6 +1,26 @@
 import  { useEffect, useState } from 'react'
 import { item } from './todo';
- 
+import { styled } from 'styled-components';
+ const EditTaskContainer =styled.div`
+ position: fixed;
+ top: 0;
+ left: 0;
+ z-index: 999;
+ width: 100vw;
+ height: 100vh;
+ background-color: black;
+ background-color: rgba(0, 0, 0, 0.75);
+ `;
+ const PopupCard =styled.div`
+ width: 300px;
+ position: absolute;
+ left: 50%;
+ top: 50%;
+ margin-left: -150px;
+ background-color: white;
+ padding: 40px;
+ transform: translateY(-50%);
+ `;
 export function Todolist(){
     const [todos,setTodos]=useState<item[]>(()=>{
         const loadTodos =localStorage.getItem("todos");
@@ -69,14 +89,15 @@ export function Todolist(){
       <div>
         {isEditing &&(
             
-            <div>
-                <form onSubmit={handleUpdateTask}>
+            <EditTaskContainer>
+                <PopupCard><form onSubmit={handleUpdateTask}>
                 <div>Edit task</div>
                 <input type="text" name="EditTask"  onChange={(e)=>setTaskUpdate(e.currentTarget.value)} required/>
-            <button type='submit'>agree</button><button onClick={handleCloseEditTask}>close</button>
-                </form>
+            <button type='submit'>Update</button><button onClick={handleCloseEditTask}>close</button>
+                </form></PopupCard>
                 
-            </div>
+                
+            </EditTaskContainer>
         )}
       </div>
       </div>
