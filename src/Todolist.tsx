@@ -33,6 +33,12 @@ export function Todolist(){
           return todo
         }))
       }
+      function handleOpenEditTask(){
+        setIsEditing(!isEditing)
+      }
+      function handleEditTask(id:number){
+
+      }
     return(
         <div>
             <div>
@@ -44,11 +50,18 @@ export function Todolist(){
       <ul>
         {todos.map((todo)=>(
           
-          <li key={todo.id}><input type="checkbox" onClick={()=>handleToggle(todo.id)} defaultChecked={todo.complete}/>{todo.text}<button >Edit</button><button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
+          <li key={todo.id}><input type="checkbox" onClick={()=>handleToggle(todo.id)} defaultChecked={todo.complete}/>{todo.text}<button onClick={handleOpenEditTask}>Edit</button><button onClick={()=>handleDeleteTask(todo.id)}>delete</button></li>
         ))}
         
       </ul>
-      
+      <div>
+        {isEditing &&(
+            
+            <div><input type="text" name="EditTask" />
+            <button>agree</button><button onClick={handleOpenEditTask}>close</button>
+            </div>
+        )}
+      </div>
       </div>
     
         </div>
